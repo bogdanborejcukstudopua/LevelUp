@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">LevelUp</a>
+            <div class="d-flex">
+                <a href="/create" class="btn btn-outline-light btn-sm">Додати новину</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <% if (news.length === 0) { %>
+            <div class="alert alert-info text-center mt-5" role="alert">
+                <h4 class="alert-heading">Інформація відсутня</h4>
+                <p>На даний момент у базі даних немає записів.</p>
+                <hr>
+                <p class="mb-0">Ви можете додати першу статтю, натиснувши кнопку "Додати новину".</p>
+            </div>
+        <% } else { %>
+            <div class="row">
+                <% news.forEach(post => { %>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <% if(post.imageUrl) { %>
+                                <img src="<%= post.imageUrl %>" class="card-img-top" alt="Зображення новини" style="height: 200px; object-fit: cover;">
+                            <% } else { %>
+                                <div class="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 200px;">
+                                    <span>Зображення відсутнє</span>
+                                </div>
+                            <% } %>
+                            <div class="card-body">
+                                <h5 class="card-title"><%= post.title %></h5>
+                                <p class="card-text text-muted"><%= post.shortDesc %></p>
+                            </div>
+                            <div class="card-footer bg-white border-top-0">
+                                <small class="text-muted">Дата публікації: <%= new Date(post.createdAt).toLocaleDateString('uk-UA') %></small>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+    </div>
+
+</body>
+</html>
